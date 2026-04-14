@@ -141,4 +141,25 @@ class Program
     }
 
     Console.WriteLine($"Grand Total: ₱{grandTotal}");
+
+    //Discount
+    double discount = 0;
+
+    if (grandTotal >= 5000)
+    {
+        discount = grandTotal * 0.10;
+        Console.WriteLine($"Discount (10%): ₱{discount}");
+    }
+
+    double finalTotal = grandTotal - discount;
+
+    Console.WriteLine($"Final Total: ₱{finalTotal}");
+
+    //Show Updated Stock
+    Console.WriteLine("\n=== UPDATED STOCK ===");
+
+    foreach (Product p in products)
+    {
+    Console.WriteLine($"{p.Name} - Remaining: {p.RemainingStock}");
+    }
 }

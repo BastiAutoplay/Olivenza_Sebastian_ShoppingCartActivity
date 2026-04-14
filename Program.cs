@@ -39,56 +39,106 @@ class Program
         new Product { Id = 3, Name = "Headphones", Price = 2000, RemainingStock = 15 }
     };
 
-    Console.WriteLine("=== STORE MENU ===");
-    foreach (Product p in products)
+    Product[] cart = new Product[10];
+    int[] cartQuantity = new int[10];
+    int cartCount = 0;
+
+    char choice;
+
+    do
     {
-        p.DisplayProduct();
+        Console.WriteLine("\n=== STORE MENU ===");
+        foreach (Product p in products)
+        {
+            p.DisplayProduct();
+        }
+
+        int productChoice;
+        Console.Write("\nEnter product number: ");
+
+        if (!int.TryParse(Console.ReadLine(), out productChoice))
+        {
+            Console.WriteLine("Invalid input.");
+            continue;
+        }
+
+        if (productChoice < 1 || productChoice > products.Length)
+        {
+            Console.WriteLine("Invalid product number.");
+            continue;
+        }
+
+        int quantity;
+        Console.Write("Enter quantity: ");
+
+        if (!int.TryParse(Console.ReadLine(), out quantity) || quantity <= 0)
+        {
+            Console.WriteLine("Invalid quantity.");
+            continue;
+        }
+
+        Product selectedProduct = products[productChoice - 1];
+
+        if (selectedProduct.RemainingStock == 0)
+        {
+            Console.WriteLine("Out of stock.");
+            continue;
+        }
+
+        if (!selectedProduct.HasEnoughStock(quantity))
+        {
+            Console.WriteLine("Not enough stock.");
+            continue;
+        }
+
+        // Check duplicate in cart
+        bool found = false;
+        for (int i = 0; i < cartCount; i++)
+        {
+            if (cart[i].Id == selectedProduct.Id)
+            {
+                cartQuantity[i] += quantity;
+                found = true;
+                break;
+            }
+        }
+
+        // If not duplicate, add new item
+        if (!found)
+        {
+            if (cartCount >= cart.Length)
+            {
+                Console.WriteLine("Cart is full.");
+                continue;
+            }
+
+            cart[cartCount] = selectedProduct;
+            cartQuantity[cartCount] = quantity;
+            cartCount++;
+        }
+
+        selectedProduct.DeductStock(quantity);
+
+        Console.WriteLine("Added to cart!");
+
+        Console.Write("\nAdd more items? (Y/N): ");
+        choice = char.ToUpper(Console.ReadKey().KeyChar);
+        Console.WriteLine();
+
+    } while (choice == 'Y');
+
+    // Display cart
+    Console.WriteLine("\n=== RECEIPT ===");
+
+    double grandTotal = 0;
+
+    for (int i = 0; i < cartCount; i++)
+    {
+        double subtotal = cart[i].GetItemTotal(cartQuantity[i]);
+        grandTotal += subtotal;
+
+        Console.WriteLine($"{cart[i].Name} x{cartQuantity[i]} = ₱{subtotal}");
     }
 
-    int productChoice;
-    Console.Write("\nEnter product number: ");
-
-    if (!int.TryParse(Console.ReadLine(), out productChoice))
-    {
-        Console.WriteLine("Invalid input. Please enter a number.");
-        return;
-    }
-
-    if (productChoice < 1 || productChoice > products.Length)
-    {
-        Console.WriteLine("Invalid product number.");
-        return;
-    }
-
-    int quantity;
-    Console.Write("Enter quantity: ");
-
-    if (!int.TryParse(Console.ReadLine(), out quantity) || quantity <= 0)
-    {
-        Console.WriteLine("Invalid quantity.");
-        return;
-    }
-
-    Product selectedProduct = products[productChoice - 1];
-
-    if (selectedProduct.RemainingStock == 0)
-    {
-        Console.WriteLine("This product is out of stock.");
-        return;
-    }
-
-    if (!selectedProduct.HasEnoughStock(quantity))
-    {
-        Console.WriteLine("Not enough stock available.");
-        return;
-    }
-
-    double total = selectedProduct.GetItemTotal(quantity);
-
-    Console.WriteLine($"\nAdded to cart: {selectedProduct.Name} x{quantity}");
-    Console.WriteLine($"Subtotal: ₱{total}");
-
-    selectedProduct.DeductStock(quantity);
-
-    Console.WriteLine($"Remaining stock: {selectedProduct.RemainingStock}");
+    Console.WriteLine($"Grand Total: ₱{grandTotal}");
 }

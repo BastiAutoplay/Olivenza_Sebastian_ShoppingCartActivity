@@ -44,4 +44,51 @@ class Program
     {
         p.DisplayProduct();
     }
+
+    int productChoice;
+    Console.Write("\nEnter product number: ");
+
+    if (!int.TryParse(Console.ReadLine(), out productChoice))
+    {
+        Console.WriteLine("Invalid input. Please enter a number.");
+        return;
+    }
+
+    if (productChoice < 1 || productChoice > products.Length)
+    {
+        Console.WriteLine("Invalid product number.");
+        return;
+    }
+
+    int quantity;
+    Console.Write("Enter quantity: ");
+
+    if (!int.TryParse(Console.ReadLine(), out quantity) || quantity <= 0)
+    {
+        Console.WriteLine("Invalid quantity.");
+        return;
+    }
+
+    Product selectedProduct = products[productChoice - 1];
+
+    if (selectedProduct.RemainingStock == 0)
+    {
+        Console.WriteLine("This product is out of stock.");
+        return;
+    }
+
+    if (!selectedProduct.HasEnoughStock(quantity))
+    {
+        Console.WriteLine("Not enough stock available.");
+        return;
+    }
+
+    double total = selectedProduct.GetItemTotal(quantity);
+
+    Console.WriteLine($"\nAdded to cart: {selectedProduct.Name} x{quantity}");
+    Console.WriteLine($"Subtotal: ₱{total}");
+
+    selectedProduct.DeductStock(quantity);
+
+    Console.WriteLine($"Remaining stock: {selectedProduct.RemainingStock}");
 }

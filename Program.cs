@@ -31,7 +31,17 @@ class Product
 class Program
 {
     static void Main()
+{
+    Product[] products = new Product[]
     {
-        Console.WriteLine("Shopping Cart System");
+        new Product { Id = 1, Name = "Laptop", Price = 30000, RemainingStock = 5 },
+        new Product { Id = 2, Name = "Phone", Price = 15000, RemainingStock = 10 },
+        new Product { Id = 3, Name = "Headphones", Price = 2000, RemainingStock = 15 }
+    };
+
+    Console.WriteLine("=== STORE MENU ===");
+    foreach (Product p in products)
+    {
+        p.DisplayProduct();
     }
 }

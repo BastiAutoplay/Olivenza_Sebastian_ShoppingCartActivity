@@ -31,6 +31,17 @@ class Product
 
 class Program
 {
+
+    static void ShowCartMenu()
+    {
+        Console.WriteLine("\n=== CART MENU ===");
+        Console.WriteLine("1. View Cart");
+        Console.WriteLine("2. Update Item Quantity");
+        Console.WriteLine("3. Remove Item");
+        Console.WriteLine("4. Clear Cart");
+        Console.WriteLine("5. Checkout");
+    }
+
     static void Main()
     {
         Product[] products = new Product[]
@@ -121,6 +132,85 @@ class Program
             selectedProduct.DeductStock(quantity);
 
             Console.WriteLine($"Added to cart: {selectedProduct.Name} x{quantity}");
+
+            bool managingCart = true;
+
+            while (managingCart)
+            {
+                ShowCartMenu();
+                Console.Write("Choose option: ");
+
+                int option;
+                if (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Invalid input.");
+                    continue;
+                }
+
+                switch (option)
+                {
+                    case 1:
+                        Console.WriteLine("\n=== YOUR CART ===");
+                        for (int i = 0; i < cartCount; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {cart[i].Name} x{cartQuantity[i]}");
+                        }
+                        break;
+
+                    case 2:
+                        Console.Write("Enter item number to update: ");
+                        int updateIndex;
+                        if (!int.TryParse(Console.ReadLine(), out updateIndex) || updateIndex < 1 || updateIndex > cartCount)
+                        {
+                            Console.WriteLine("Invalid selection.");
+                            break;
+                        }
+
+                        Console.Write("Enter new quantity: ");
+                        int newQty;
+                        if (!int.TryParse(Console.ReadLine(), out newQty) || newQty <= 0)
+                        {
+                            Console.WriteLine("Invalid quantity.");
+                            break;
+                        }
+
+                        cartQuantity[updateIndex - 1] = newQty;
+                        Console.WriteLine("Quantity updated.");
+                        break;
+
+                    case 3:
+                        Console.Write("Enter item number to remove: ");
+                        int removeIndex;
+                        if (!int.TryParse(Console.ReadLine(), out removeIndex) || removeIndex < 1 || removeIndex > cartCount)
+                        {
+                            Console.WriteLine("Invalid selection.");
+                            break;
+                        }
+
+                        for (int i = removeIndex - 1; i < cartCount - 1; i++)
+                        {
+                            cart[i] = cart[i + 1];
+                            cartQuantity[i] = cartQuantity[i + 1];
+                        }
+
+                        cartCount--;
+                        Console.WriteLine("Item removed.");
+                        break;
+
+                    case 4:
+                        cartCount = 0;
+                        Console.WriteLine("Cart cleared.");
+                        break;
+
+                    case 5:
+                        managingCart = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
+                }
+            }
 
             Console.Write("\nAdd more items? (Y/N): ");
             choice = char.ToUpper(Console.ReadKey().KeyChar);

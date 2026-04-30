@@ -5,6 +5,14 @@ It uses classes, arrays, and basic input validation.
 
 ---
 
+## 📌 Overview
+
+This pull request contains the implementation of Part 2 of the Shopping Cart System.
+
+It expands the original program by adding cart management features, payment processing, receipt improvements, and order tracking.
+
+---
+
 ## Features
 
 - Display product menu
@@ -18,6 +26,54 @@ It uses classes, arrays, and basic input validation.
 
 ---
 
+## 🚀 Features Added
+
+### 🛒 Cart Management
+- View cart items
+- Update item quantity
+- Remove items from cart
+- Clear entire cart
+- Checkout option
+
+### 💳 Payment System
+- Accepts user payment input
+- Validates numeric input using `TryParse`
+- Prevents insufficient payment
+- Calculates and displays change
+
+### 🧾 Receipt Enhancements
+- Displays receipt number
+- Shows current date and time
+- Displays total, discount, and final amount
+
+### 📦 Inventory Improvements
+- Updates product stock after purchase
+- Displays updated stock after checkout
+- Low stock alert for items with stock ≤ 5
+
+### 📜 Order History
+- Stores completed transactions
+- Displays previous receipts with:
+  - Receipt number
+  - Total amount
+  - Date and time
+
+---
+
+## 🧠 Improvements Made
+
+- Strengthened input validation (menu options and Y/N prompts)
+- Organized logic for better readability
+- Improved user interaction flow
+
+---
+
+## 🧪 Notes
+
+- All features were implemented step-by-step with multiple commits
+- Program was tested with invalid inputs to ensure stability
+- Order history is stored in memory (resets when program restarts)
+
 ## How to Run
 
 1. Open in Visual Studio or any C# IDE
@@ -29,6 +85,12 @@ It uses classes, arrays, and basic input validation.
 ## Flowchart
 
 A flowchart of the program is included in this repository.
+
+---
+
+## 📷 Sample Output
+
+<img width="1919" height="991" alt="image" src="https://github.com/user-attachments/assets/56e2c537-186d-416d-8413-bf20c6b04f11" />
 
 ---
 

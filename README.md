@@ -34,11 +34,29 @@ A flowchart of the program is included in this repository.
 
 ## AI Usage in This Project
 
-I used AI to help me understand parts of the project:
-- Input validation using `int.TryParse()`
-- Structuring the shopping cart logic
+AI was used as a guide to help understand and implement parts of the program.
 
-I asked questions about how to implement certain features and then adjusted the code to better understand it.
+### Which parts used AI:
+- Input validation using `int.TryParse()`
+- Cart system logic (handling duplicates and quantities)
+- Loop structure for continuous user input
+- Discount and receipt computation
+
+### Why AI was used:
+- To better understand how to structure the program using classes and arrays
+- To learn proper validation techniques in C#
+- To help debug and improve logic flow
+
+### Prompts/questions asked:
+- "How to validate user input in C# using TryParse?"
+- "How to create a shopping cart system using arrays?"
+- "How to prevent duplicate items in a cart?"
+
+### What I changed after using AI:
+- Adjusted variable names to make them clearer
+- Simplified some conditions for better readability
+- Modified the flow to match the project requirements
+- Ensured I understood each part before finalizing the code
 
 ---
 

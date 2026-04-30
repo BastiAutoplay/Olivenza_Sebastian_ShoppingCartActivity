@@ -41,7 +41,6 @@ class Program
         Console.WriteLine("4. Clear Cart");
         Console.WriteLine("5. Checkout");
     }
-
     static void Main()
     {
         Product[] products = new Product[]
@@ -54,7 +53,7 @@ class Program
         Product[] cart = new Product[10];
         int[] cartQuantity = new int[10];
         int cartCount = 0;
-
+        int receiptCounter = 1;
         char choice;
 
         while (true)
@@ -230,10 +229,14 @@ class Program
             }
         }
 
-        Checkout:
+    Checkout:
 
         // Display cart
         Console.WriteLine("\n=== RECEIPT ===");
+
+
+        Console.WriteLine($"Receipt No: {receiptCounter:D4}");
+        Console.WriteLine($"Date: {DateTime.Now:MMMM dd, yyyy hh:mm tt}");
 
         double grandTotal = 0;
 
@@ -285,6 +288,7 @@ class Program
 
         Console.WriteLine($"Payment: ₱{payment}");
         Console.WriteLine($"Change: ₱{change}");
+        receiptCounter++;
 
         //Show Updated Stock
         Console.WriteLine("\n=== UPDATED STOCK ===");

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.ComponentModel.Design;
 
 class Product
 {
@@ -45,7 +46,7 @@ class Program
 
         char choice;
 
-        while(true)
+        while (true)
         {
             Console.WriteLine("\n=== STORE MENU ===");
             foreach (Product p in products)
@@ -119,16 +120,27 @@ class Program
 
             selectedProduct.DeductStock(quantity);
 
-            Console.WriteLine("Added to cart!");
+            Console.WriteLine($"Added to cart: {selectedProduct.Name} x{quantity}");
 
             Console.Write("\nAdd more items? (Y/N): ");
             choice = char.ToUpper(Console.ReadKey().KeyChar);
             Console.WriteLine();
 
-            if (choice == 'N' || choice == 'n') break;
+            if (choice == 'Y')
+            {
+                break; // continue shopping
+            }
+            else if (choice == 'N')
+            {
+                goto Checkout; // exit loop properly
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter Y or N only.");
+            }
+        }
 
-
-        } 
+        Checkout:
 
         // Display cart
         Console.WriteLine("\n=== RECEIPT ===");

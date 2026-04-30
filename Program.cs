@@ -260,6 +260,32 @@ class Program
 
         Console.WriteLine($"Final Total: ₱{finalTotal}");
 
+        double payment;
+
+        while (true)
+        {
+            Console.Write("\nEnter payment: ");
+
+            if (!double.TryParse(Console.ReadLine(), out payment))
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+                continue;
+            }
+
+            if (payment < finalTotal)
+            {
+                Console.WriteLine("Insufficient payment.");
+                continue;
+            }
+
+            break;
+        }
+
+        double change = payment - finalTotal;
+
+        Console.WriteLine($"Payment: ₱{payment}");
+        Console.WriteLine($"Change: ₱{change}");
+
         //Show Updated Stock
         Console.WriteLine("\n=== UPDATED STOCK ===");
 

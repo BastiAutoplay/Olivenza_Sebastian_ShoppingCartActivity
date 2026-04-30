@@ -297,5 +297,23 @@ class Program
         {
             Console.WriteLine($"{p.Name} - Remaining: {p.RemainingStock}");
         }
+
+        Console.WriteLine("\n=== LOW STOCK ALERT ===");
+
+        bool hasLowStock = false;
+
+        foreach (Product p in products)
+        {
+            if (p.RemainingStock <= 5)
+            {
+                Console.WriteLine($"{p.Name} has only {p.RemainingStock} stocks left.");
+                hasLowStock = true;
+            }
+        }
+
+        if (!hasLowStock)
+        {
+            Console.WriteLine("All products have sufficient stock.");
+        }
     }
 }

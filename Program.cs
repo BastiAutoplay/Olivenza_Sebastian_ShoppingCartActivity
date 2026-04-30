@@ -40,17 +40,20 @@ class Program
         Console.WriteLine("3. Remove Item");
         Console.WriteLine("4. Clear Cart");
         Console.WriteLine("5. Checkout");
+        Console.WriteLine("6. View Order History");
     }
     static void Main()
     {
         Product[] products = new Product[]
         {
-        new Product { Id = 1, Name = "Laptop", Price = 30000, RemainingStock = 5 },
-        new Product { Id = 2, Name = "Phone", Price = 15000, RemainingStock = 10 },
-        new Product { Id = 3, Name = "Headphones", Price = 2000, RemainingStock = 15 }
+        new Product { Id = 1, Name = "Laptop", Price = 30000, RemainingStock = 10 },
+        new Product { Id = 2, Name = "Phone", Price = 15000, RemainingStock = 20 },
+        new Product { Id = 3, Name = "Headphones", Price = 2000, RemainingStock = 30 }
         };
 
         Product[] cart = new Product[10];
+        string[] orderHistory = new string[20];
+        int orderCount = 0;
         int[] cartQuantity = new int[10];
         int cartCount = 0;
         int receiptCounter = 1;
@@ -208,6 +211,21 @@ class Program
                     default:
                         Console.WriteLine("Invalid option.");
                         break;
+
+                    case 6:
+                        Console.WriteLine("\n=== ORDER HISTORY ===");
+
+                        if (orderCount == 0)
+                        {
+                            Console.WriteLine("No orders yet.");
+                            break;
+                        }
+
+                        for (int i = 0; i < orderCount; i++)
+                        {
+                            Console.WriteLine(orderHistory[i]);
+                        }
+                        break;
                 }
             }
 
@@ -289,6 +307,12 @@ class Program
         Console.WriteLine($"Payment: ₱{payment}");
         Console.WriteLine($"Change: ₱{change}");
         receiptCounter++;
+
+        // Save to order history
+        string receiptRecord = $"Receipt No: {receiptCounter - 1:D4} | Total: ₱{finalTotal} | Date: {DateTime.Now:MMMM dd, yyyy hh:mm tt}";
+
+        orderHistory[orderCount] = receiptRecord;
+        orderCount++;
 
         //Show Updated Stock
         Console.WriteLine("\n=== UPDATED STOCK ===");
